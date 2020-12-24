@@ -1,37 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/providers/product_provider.dart';
 import 'package:flutter_shop/screens/product_detail.dart';
+import 'package:provider/provider.dart';
 
 class ProductItem extends StatelessWidget {
-  final String id;
-  final String title;
-  final String imageUrl;
-
-  const ProductItem(
-      {@required this.id, @required this.title, @required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
+    final theProduct = Provider.of<ProductItemProvider>(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: GridTile(
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context).pushNamed(ProductDetailScreen.routeName, arguments: id);
+            Navigator.of(context).pushNamed(ProductDetailScreen.routeName, arguments: theProduct.id);
           },
           child: Image.network(
-            imageUrl,
+            theProduct.imageUrl,
             fit: BoxFit.cover,
           ),
         ),
         footer: GridTileBar(
           leading: IconButton(
             icon: Icon(
-              Icons.favorite,
+              theProduct.isFavorite ? Icons.favorite : Icons.favorite_border,
               color: Theme.of(context).accentColor,
             ),
-            onPressed: () {},
+            onPressed: () {
+              theProduct.toggleLikeStatus();
+            },
           ),
-          title: Text(title, textAlign: TextAlign.center),
+          title: Text(theProduct.title, textAlign: TextAlign.center),
           trailing: IconButton(
             icon: Icon(Icons.card_giftcard),
             onPressed: () {},
