@@ -25,6 +25,10 @@ class CartProvider with ChangeNotifier {
     return _items.values.toList();
   }
 
+  List<String> get itemKeyList {
+    return _items.keys.toList();
+  }
+
   int get count {
     return _items.length;
   }
@@ -32,6 +36,11 @@ class CartProvider with ChangeNotifier {
   double get total {
     return _items.keys.fold(0,
         (sum, index) => sum += (_items[index].price) * _items[index].quantity);
+  }
+
+  void removeItem(productId) {
+    _items.remove(productId);
+    notifyListeners();
   }
 
   void addItem({String productId, double price, String title}) {
