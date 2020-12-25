@@ -38,6 +38,12 @@ class CartProvider with ChangeNotifier {
         (sum, index) => sum += (_items[index].price) * _items[index].quantity);
   }
 
+  void clear() {
+    print('clear');
+    _items = {};
+    notifyListeners();
+  }
+
   void removeItem(productId) {
     _items.remove(productId);
     notifyListeners();

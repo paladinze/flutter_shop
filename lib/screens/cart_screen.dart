@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_shop/providers/cart_provider.dart';
+import 'package:flutter_shop/providers/orders_provider.dart';
 import 'package:flutter_shop/widgets/cart_item.dart' as ci;
 import 'package:provider/provider.dart';
 
@@ -58,7 +59,11 @@ class CartScreen extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          final ordersData = Provider.of<OrdersProvider>(context, listen: false);
+          ordersData.addOrder(items, theCart.total);
+          theCart.clear();
+        },
         child: Icon(Icons.money),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
