@@ -61,7 +61,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
           ),
         ],
       ),
-      body: ProductsGrid(filterMode: filterMode),
+      body: RefreshIndicator(onRefresh: () {
+        return Future.value(false);
+      },
+      child: ProductsGrid(filterMode: filterMode)),
     );
   }
 }
